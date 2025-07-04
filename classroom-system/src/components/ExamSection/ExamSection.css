@@ -1,0 +1,818 @@
+.exams-container {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.exams-empty {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.exam-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.exam-card:last-child {
+  margin-bottom: 0;
+}
+
+.exam-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.create-exam-form {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Loading indicator for file uploads */
+.uploading-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.circular-progress {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 4px solid #f0f0f0;
+  border-top-color: #6c63ff;
+  animation: spin 1s infinite linear;
+  margin-bottom: 1rem;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(102, 126, 234, 0.2);
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.exam-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.exam-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* Add these styles for the toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+  margin-right: 40px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .3s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s;
+}
+
+input:checked + .slider {
+  background-color: #4CAF50;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #4CAF50;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.status-label {
+  position: absolute;
+  right: -35px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  font-weight: bold;
+  width: 30px;
+}
+
+/* Add styling for the enhanced edit button */
+.edit-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #6c63ff;
+  color: white;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.edit-button:hover {
+  background: #5a52d5;
+}
+
+.edit-icon {
+  font-size: 14px;
+}
+
+/* Make form groups display better */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.question-button {
+  margin-left: 8px;
+  background-color: #4a90e2;
+}
+
+.question-button:hover {
+  background-color: #357ae8;
+}
+
+/* Question Editor Styles */
+.question-editor-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.question-editor-modal {
+  background-color: white;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  color: #666;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.question-source-selector {
+  margin-bottom: 1.5rem;
+}
+
+.source-options {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.source-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  width: 45%;
+  background-color: #f8f9fa;
+  border: 2px solid #f0f0f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.source-option.active {
+  border-color: #6c63ff;
+  background-color: #f0f0ff;
+}
+
+.source-option:hover {
+  background-color: #e9ecef;
+}
+
+.source-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.question-form {
+  margin-top: 1.5rem;
+}
+
+.question-form small {
+  display: block;
+  margin-top: 0.25rem;
+  color: #666;
+  font-size: 0.8rem;
+}
+
+.success-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.success-icon {
+  font-size: 2rem;
+  color: #4CAF50;
+  margin-bottom: 1rem;
+}
+
+.edit-question-button {
+  background-color: #e67e22;
+}
+
+.edit-question-button:hover {
+  background-color: #d35400;
+}
+
+/* Question List Editor Styles */
+.question-list-modal {
+  max-width: 800px;
+  width: 95%;
+}
+
+.questions-container {
+  margin-top: 1rem;
+}
+
+.questions-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.questions-list {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.question-item {
+  padding: 1rem;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+}
+
+.question-content {
+  display: flex;
+  flex: 1;
+}
+
+.question-number {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.question-text {
+  flex: 1;
+}
+
+.question-options {
+  margin-top: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 0.5rem;
+}
+
+.option {
+  font-size: 0.9rem;
+}
+
+.option-label {
+  font-weight: bold;
+  display: inline-block;
+  width: 20px;
+}
+
+.option-label.correct {
+  color: #4CAF50;
+}
+
+.question-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.question-actions-container {
+  display: flex;
+  gap: 10px;
+}
+
+.import-container {
+  position: relative;
+}
+
+.import-button {
+  background-color: #e67e22;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.import-button:hover {
+  background-color: #d35400;
+}
+
+.import-icon {
+  font-size: 16px;
+}
+
+.question-edit-form {
+  padding: 1rem;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+
+.no-questions-message {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.success-submessage {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 0.5rem;
+}
+
+.exam-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.exam-info-grid > span {
+  background: #f8f9fa;
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.exam-schedule, .exam-sharing {
+  grid-column: 1 / -1;
+}
+
+/* Export dropdown styles */
+.export-dropdown-container {
+  position: relative;
+}
+
+.export-button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.export-button:hover {
+  background-color: #357ae8;
+}
+
+.export-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.export-dropdown button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 15px;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.export-dropdown button:hover {
+  background-color: #f5f5f5;
+}
+
+.export-icon, .export-format-icon {
+  font-size: 16px;
+}
+
+/* Shared exams section styling */
+.shared-section-header {
+  margin-top: 2rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.shared-exam-card {
+  border-left: 4px solid #4a90e2;
+}
+
+.exam-creator {
+  grid-column: 1 / -1;
+  font-style: italic;
+}
+
+.take-exam-button {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.take-exam-button:hover {
+  background-color: #4cae4c;
+}
+
+.view-questions-button {
+  background-color: #5bc0de;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.view-questions-button:hover {
+  background-color: #46b8da;
+}
+
+.exam-id {
+  font-family: monospace;
+  background-color: #f8f9fa;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border-left: 4px solid #6c63ff;
+  user-select: text;
+  cursor: text;
+}
+
+/* Tab navigation styles */
+.exam-tabs {
+  display: flex;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-button {
+  padding: 0.75rem 1.5rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 1rem;
+}
+
+.tab-button:hover {
+  color: #4a90e2;
+}
+
+.tab-button.active {
+  color: #4a90e2;
+  border-bottom-color: #4a90e2;
+}
+
+/* Delete button specific styling */
+.edit-button.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  margin-left: auto;
+}
+
+.edit-button.delete-button:hover {
+  background-color: #c0392b;
+}
+
+/* Add these responsive styles at the end of your ExamSection.css file */
+
+/* Base responsive adjustments */
+.exam-card {
+  width: 100%;
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 992px) {
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .section-header button {
+    align-self: flex-start;
+  }
+  
+  .exam-details {
+    flex-direction: column;
+  }
+  
+  .exam-info-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .exam-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Small screens (mobile phones) */
+@media (max-width: 768px) {
+  .dashboard-section {
+    padding: 1rem;
+  }
+  
+  .exam-tabs {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 0.5rem;
+  }
+  
+  .tab-button {
+    padding: 0.5rem 1rem;
+  }
+  
+  .exam-card {
+    padding: 1rem;
+  }
+  
+  .exam-actions {
+    gap: 0.5rem;
+  }
+  
+  .edit-button, .question-button, .delete-button {
+    padding: 0.5rem;
+    font-size: 0.875rem;
+    width: calc(50% - 0.25rem);
+  }
+  
+  .edit-button i {
+    margin-right: 0.25rem;
+  }
+  
+  /* Make the question list editor modal more mobile-friendly */
+  .question-list-modal {
+    width: 95%;
+    max-width: 100%;
+    padding: 1rem;
+  }
+  
+  .questions-list {
+    max-height: 50vh;
+  }
+  
+  .question-item {
+    flex-direction: column;
+  }
+  
+  .question-actions {
+    margin-top: 0.5rem;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  .exam-card h3 {
+    font-size: 1.25rem;
+  }
+  
+  .exam-info-grid > span {
+    font-size: 0.8rem;
+    padding: 0.35rem;
+  }
+  
+  /* Adjust toggle switch and label position */
+  .switch {
+    margin-right: 25px;
+  }
+  
+  .status-label {
+    right: -25px;
+    font-size: 10px;
+  }
+  
+  /* Make buttons full width on very small screens */
+  .edit-button, .question-button, .delete-button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Simplify button text */
+  .question-button, .edit-question-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .question-button:after {
+    content: "Add";
+  }
+  
+  .edit-question-button:after {
+    content: "Edit Q";
+  }
+  
+  .question-button span, .edit-question-button span {
+    display: none;
+  }
+}

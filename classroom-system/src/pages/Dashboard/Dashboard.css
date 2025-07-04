@@ -1,0 +1,385 @@
+.dashboard-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+}
+
+/* Dashboard Loading */
+.dashboard-loading {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f9fa;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(102, 126, 234, 0.2);
+  border-top: 5px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.dashboard-logo h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dashboard-user {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-greeting {
+  font-weight: 500;
+}
+
+.logout-btn {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Dashboard Content Layout */
+.dashboard-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Sidebar */
+.dashboard-sidebar {
+  width: 250px;
+  background-color: white;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem 0;
+  overflow-y: auto;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-nav li button {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  text-align: left;
+  font-size: 1rem;
+  color: #555;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sidebar-nav li button:hover {
+  background-color: #f1f1f1;
+  color: #667eea;
+}
+
+.sidebar-nav li.active button {
+  background-color: #f0f3ff;
+  color: #667eea;
+  font-weight: 500;
+  border-left: 3px solid #667eea;
+}
+
+.nav-icon {
+  font-size: 1.2rem;
+}
+
+/* Main Content Area */
+.dashboard-main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.dashboard-section {
+  margin-bottom: 2rem;
+}
+
+.dashboard-section h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.8rem;
+}
+
+/* Stats Cards */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.stat-icon {
+  font-size: 2rem;
+  color: #667eea;
+}
+
+.stat-data h3 {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.stat-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+/* Recent Activity */
+.recent-activity {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.recent-activity h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+/* Empty States */
+.activity-empty, .exams-empty, .results-empty {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+/* Profile Card */
+.profile-container {
+  max-width: 600px;
+}
+
+.profile-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.profile-header {
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #f0f3ff 0%, #e8ecff 100%);
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.profile-info h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.profile-info p {
+  margin: 0.5rem 0 0 0;
+  color: #666;
+}
+
+.profile-details {
+  padding: 2rem;
+  border-bottom: 1px solid #eee;
+}
+
+.profile-item {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.profile-item:last-child {
+  margin-bottom: 0;
+}
+
+.profile-label {
+  width: 120px;
+  color: #666;
+  font-weight: 600;
+}
+
+.profile-value {
+  color: #333;
+}
+
+.profile-actions {
+  padding: 1.5rem 2rem;
+}
+
+/* Settings */
+.settings-container {
+  max-width: 700px;
+}
+
+.settings-group {
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+}
+
+.settings-group h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.settings-item {
+  margin-bottom: 1rem;
+}
+
+.settings-item:last-child {
+  margin-bottom: 0;
+}
+
+.settings-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+  .stats-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+  
+  .dashboard-sidebar {
+    width: 100%;
+    padding: 0.5rem 0;
+  }
+  
+  .sidebar-nav {
+    display: flex;
+    overflow-x: auto;
+    padding: 0 1rem;
+  }
+  
+  .sidebar-nav ul {
+    display: flex;
+  }
+  
+  .sidebar-nav li {
+    margin-bottom: 0;
+    margin-right: 0.5rem;
+  }
+  
+  .sidebar-nav li button {
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+  }
+  
+  .sidebar-nav li.active button {
+    border-left: none;
+    border-bottom: 3px solid #667eea;
+  }
+  
+  .dashboard-main {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-header {
+    padding: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .dashboard-user {
+    margin-top: 0.5rem;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .stats-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+}
