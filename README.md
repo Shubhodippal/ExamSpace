@@ -10,20 +10,6 @@
 
 ExamSpace is a comprehensive online examination platform that allows educators to create, manage, and conduct exams while providing students with a seamless exam-taking experience. The project is currently under active development.
 
-## 📋 Table of Contents
-
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [API Documentation](#api-documentation)
-- [Development](#development)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## ✨ Features
 
 ### Current Features
