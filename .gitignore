@@ -22,4 +22,29 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment files - Frontend
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 classroom-system/.env
+*/.env
+**/.env
+
+# Spring Boot Configuration files - Backend
+Backend/demo/src/main/resources/application.properties
+Backend/demo/src/main/resources/application-*.properties
+Backend/demo/target/classes/application.properties
+Backend/demo/target/classes/application-*.properties
+application.properties
+application-*.properties
+
+# Maven target directory
+Backend/demo/target/
+target/
+
+# IDE files
+.vscode/
+Backend/.vscode/
