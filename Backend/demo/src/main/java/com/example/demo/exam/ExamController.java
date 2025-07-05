@@ -111,12 +111,10 @@ public class ExamController {
             exam.setExamName(examRequest.getExamName());
             exam.setCreatorUid(examRequest.getCreatorUid());
             exam.setMarks(examRequest.getMarks());
-            exam.setStartAt(examRequest.getStartAt());
-            exam.setEndAt(examRequest.getEndAt());
-            exam.setTimeLimit(examRequest.getTimeLimit());
+            // Remove startAt, endAt, timeLimit setting
             exam.setExamPasscode(examRequest.getExamPasscode());
             exam.setState("OFF"); // Default to OFF
-            exam.setSharing(examRequest.getSharing()); // Add this line to handle the sharing field
+            exam.setSharing(examRequest.getSharing());
             
             // Save the exam
             Exams createdExam = examDao.createExam(exam);
@@ -132,7 +130,7 @@ public class ExamController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
-    
+
     /**
      * Get all exams created by a specific user
      */
@@ -221,17 +219,7 @@ public class ExamController {
                 existingExam.setMarks(examRequest.getMarks());
             }
             
-            if (examRequest.getStartAt() != null) {
-                existingExam.setStartAt(examRequest.getStartAt());
-            }
-            
-            if (examRequest.getEndAt() != null) {
-                existingExam.setEndAt(examRequest.getEndAt());
-            }
-            
-            if (examRequest.getTimeLimit() != null) {
-                existingExam.setTimeLimit(examRequest.getTimeLimit());
-            }
+            // Remove startAt, endAt, timeLimit updates
             
             if (examRequest.getExamPasscode() != null) {
                 existingExam.setExamPasscode(examRequest.getExamPasscode());
@@ -369,7 +357,8 @@ public class ExamController {
             for (Question question : allGeneratedQuestions) {
                 question.setExamUid(request.getExamUid());
                 question.setCreatorUid(request.getCreatorUid());
-                question.setQuestionUid(UUID.randomUUID().toString());
+                // Remove the direct UUID setting - let createQuestionWithUniqueUid handle it
+                // question.setQuestionUid(UUID.randomUUID().toString());
                 
                 // Ensure all required fields are present
                 if (question.getQuestion() == null || question.getOptionA() == null || 
@@ -399,17 +388,24 @@ public class ExamController {
                                question.getOptionD() != null && question.getOptionD().toLowerCase().contains("true")) {
                         question.setCorrectAns("D");
                     } else {
-                        // If we can't determine a better answer, randomly assign instead of always A
+                        // If we can't determine a better answer, randomly assign
                         String[] options = {"A", "B", "C", "D"};
                         question.setCorrectAns(options[new Random().nextInt(options.length)]);
                     }
                 }
                 
-                savedQuestions.add(questionDao.createQuestion(question));
-                
-                // If we've reached the requested number, stop
-                if (savedQuestions.size() >= requestedQuestions) {
-                    break;
+                try {
+                    Question savedQuestion = createQuestionWithUniqueUid(question);
+                    savedQuestions.add(savedQuestion);
+                    
+                    // If we've reached the requested number, stop
+                    if (savedQuestions.size() >= requestedQuestions) {
+                        break;
+                    }
+                } catch (Exception e) {
+                    System.err.println("Failed to save question: " + e.getMessage());
+                    // Continue with next question instead of failing entire batch
+                    continue;
                 }
             }
             
@@ -750,14 +746,14 @@ public class ExamController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
             }
             
-            // Generate a UUID if not provided
-            if (questionRequest.getQuestionUid() == null || questionRequest.getQuestionUid().trim().isEmpty()) {
-                questionRequest.setQuestionUid(UUID.randomUUID().toString());
-            }
+            // Use the enhanced UID generation instead of manual UUID setting
+            // if (questionRequest.getQuestionUid() == null || questionRequest.getQuestionUid().trim().isEmpty()) {
+            //     questionRequest.setQuestionUid(UUID.randomUUID().toString());
+            // }
             
-            // Save the question
-            Question savedQuestion = questionDao.createQuestion(questionRequest);
-            
+            // Save the question with unique UID generation
+            Question savedQuestion = createQuestionWithUniqueUid(questionRequest);
+
             response.put("status", "success");
             response.put("message", "Question added successfully");
             response.put("question", savedQuestion);
@@ -807,7 +803,6 @@ public class ExamController {
                 // Add additional exam information
                 examDetails.put("status", exam.getState());  // ON/OFF
                 examDetails.put("marks", exam.getMarks());
-                examDetails.put("duration", exam.getTimeLimit());
                 examDetails.put("createdAt", exam.getCreatedAt());
                 examDetails.put("sharing", exam.getSharing());
                 
@@ -885,4 +880,40 @@ public class ExamController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
+    
+    /**
+     * Generate a guaranteed unique question UID with collision detection
+     */
+    private String generateUniqueQuestionUid() {
+        int maxRetries = 10;
+        for (int i = 0; i < maxRetries; i++) {
+            String questionUid = UUID.randomUUID().toString();
+            
+            // Check if this UID already exists in database
+            Question existingQuestion = questionDao.getQuestionById(questionUid);
+            if (existingQuestion == null) {
+                return questionUid;
+            }
+            
+            // If collision detected, log it and retry
+            System.err.println("Question UID collision detected: " + questionUid + " (attempt " + (i+1) + ")");
+        }
+        
+        // If all retries failed, use timestamp-based fallback
+        return "Q_" + System.currentTimeMillis() + "_" + UUID.randomUUID().toString().substring(0, 8);
+    }
+
+    /**
+     * Enhanced question creation with UID validation
+     */
+    private Question createQuestionWithUniqueUid(Question question) {
+        // Generate unique UID if not provided or if it already exists
+        if (question.getQuestionUid() == null || question.getQuestionUid().trim().isEmpty() || 
+            questionDao.getQuestionById(question.getQuestionUid()) != null) {
+            question.setQuestionUid(generateUniqueQuestionUid());
+        }
+        
+        return questionDao.createQuestion(question);
+    }
+    
 }

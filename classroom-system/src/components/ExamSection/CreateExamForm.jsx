@@ -5,7 +5,6 @@ function CreateExamForm({ onSubmit, onCancel, getUserId }) {
   const [newExam, setNewExam] = useState({
     title: '',
     description: '',
-    duration: 60,
     marks: 100,
     passcode: ''
   });
@@ -30,7 +29,7 @@ function CreateExamForm({ onSubmit, onCancel, getUserId }) {
       }
       
       // Ensure all fields are present
-      if (!newExam.title || !newExam.marks || !newExam.duration || !newExam.passcode) {
+      if (!newExam.title || !newExam.marks || !newExam.passcode) {
         console.error('All fields are required');
         return;
       }
@@ -45,9 +44,6 @@ function CreateExamForm({ onSubmit, onCancel, getUserId }) {
           examName: newExam.title,
           creatorUid: userId,
           marks: parseInt(newExam.marks) || 100,
-          startAt: null,
-          endAt: null,
-          timeLimit: parseInt(newExam.duration),
           examPasscode: newExam.passcode
         })
       });
@@ -63,7 +59,6 @@ function CreateExamForm({ onSubmit, onCancel, getUserId }) {
       setNewExam({
         title: '',
         description: '',
-        duration: 60,
         marks: 100,
         passcode: ''
       });
@@ -95,19 +90,6 @@ function CreateExamForm({ onSubmit, onCancel, getUserId }) {
             id="marks"
             name="marks"
             value={newExam.marks}
-            onChange={handleExamChange}
-            required
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="duration">Duration (minutes)</label>
-          <input
-            type="number"
-            id="duration"
-            name="duration"
-            min="5"
-            value={newExam.duration}
             onChange={handleExamChange}
             required
           />

@@ -107,9 +107,6 @@ function ExamSection() {
           examId: exam.examId,
           title: exam.examName,
           description: `Status: ${exam.state}, Marks: ${exam.marks}`,
-          duration: exam.timeLimit,
-          startTime: exam.startAt,
-          endTime: exam.endAt,
           passcode: exam.examPasscode,
           state: exam.state,
           createdAt: exam.createdAt,
@@ -313,20 +310,16 @@ function ExamSection() {
   };
 
   // Render a single exam card (used for both my exams and shared exams)
-  const renderExamCard = (exam, isShared = false) => (
-    <div key={exam.id} className="exam-card">
-      <h3>{exam.title}</h3>
-      <p>{exam.description}</p>
-      {isShared && (
-        <p className="exam-creator">Created by: {exam.creatorName} ({exam.creatorEmail})</p>
-      )}
-      <div className="exam-details">
+  const renderExamCard = (exam, isShared = false) => {
+    return (
+      <div key={exam.examId} className="exam-card">
+        <h3>{exam.title}</h3>
         <div className="exam-info-grid">
-          <span className="exam-id">
-            <strong>Exam ID:</strong> {exam.examId}
+          <span className="exam-marks">
+            <strong>Marks:</strong> {exam.description.replace(/^Status: .+?, Marks: (.+?)$/, '$1')}
           </span>
-          <span className="exam-duration">
-            <strong>Duration:</strong> {exam.duration} minutes
+          <span className="exam-status">
+            <strong>Status:</strong> {exam.state}
           </span>
           <span className="exam-created">
             <strong>Created:</strong> {new Date(exam.createdAt).toLocaleString()}
@@ -355,27 +348,23 @@ function ExamSection() {
             <i className="edit-icon">➕</i> Generate Questions
           </button>
           <button 
-            className="edit-button question-button edit-question-button"
+            className="edit-button edit-question-button"
             onClick={() => handleEditExistingQuestions(exam)}
           >
-            <i className="edit-icon">❓</i> Edit Questions
+            <i className="edit-icon">📝</i> Edit Questions
           </button>
-          {/* Add Delete Button - only show for owned exams, not shared ones */}
           {!isShared && (
             <button 
               className="edit-button delete-button"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDeleteExam(exam);
-              }}
+              onClick={() => handleDeleteExam(exam)}
             >
-              <i className="edit-icon">🗑️</i> Delete Exam
+              <i className="delete-icon">🗑️</i> Delete
             </button>
           )}
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="dashboard-section">

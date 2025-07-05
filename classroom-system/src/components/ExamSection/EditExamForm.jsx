@@ -6,7 +6,6 @@ function EditExamForm({ exam, onCancel, onUpdate}) {
     examId: '',
     title: '',
     description: '',
-    duration: 60,
     passcode: '',
     sharing: ''
   });
@@ -17,7 +16,6 @@ function EditExamForm({ exam, onCancel, onUpdate}) {
         ...exam,
         title: exam.title,
         description: exam.description.replace(/^Status: .+?, Marks: (.+?)$/, '$1'),
-        duration: exam.duration,
         passcode: exam.passcode || '',
         sharing: exam.sharing || ''
       });
@@ -45,9 +43,6 @@ function EditExamForm({ exam, onCancel, onUpdate}) {
         body: JSON.stringify({
           examName: currentExam.title,
           marks: currentExam.description.replace(/^Status: .+?, Marks: (.+?)$/, '$1'),
-          timeLimit: currentExam.duration,
-          startAt: null,
-          endAt: null,
           examPasscode: currentExam.passcode,
           sharing: currentExam.sharing || ''
         })
@@ -86,19 +81,6 @@ function EditExamForm({ exam, onCancel, onUpdate}) {
             id="edit-description"
             name="description"
             value={currentExam.description.replace(/^Status: .+?, Marks: (.+?)$/, '$1')}
-            onChange={handleEditExamChange}
-            required
-          />
-        </div>
-        
-        <div className="form-group">
-          <label htmlFor="edit-duration">Duration (minutes)</label>
-          <input
-            type="number"
-            id="edit-duration"
-            name="duration"
-            min="5"
-            value={currentExam.duration}
             onChange={handleEditExamChange}
             required
           />

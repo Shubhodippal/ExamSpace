@@ -1,14 +1,9 @@
 package com.example.demo.exam;
 
-import java.time.LocalDateTime;
-
 public class ExamRequest {
     private String examName;
-    private String creatorUid;  // Add this field to receive user ID directly
+    private String creatorUid;
     private Integer marks;
-    private LocalDateTime startAt;
-    private LocalDateTime endAt;
-    private Integer timeLimit;
     private String examPasscode;
     private String state;
     private String sharing;
@@ -36,30 +31,6 @@ public class ExamRequest {
 
     public void setMarks(Integer marks) {
         this.marks = marks;
-    }
-
-    public LocalDateTime getStartAt() {
-        return startAt;
-    }
-
-    public void setStartAt(LocalDateTime startAt) {
-        this.startAt = startAt;
-    }
-
-    public LocalDateTime getEndAt() {
-        return endAt;
-    }
-
-    public void setEndAt(LocalDateTime endAt) {
-        this.endAt = endAt;
-    }
-
-    public Integer getTimeLimit() {
-        return timeLimit;
-    }
-
-    public void setTimeLimit(Integer timeLimit) {
-        this.timeLimit = timeLimit;
     }
 
     public String getExamPasscode() {

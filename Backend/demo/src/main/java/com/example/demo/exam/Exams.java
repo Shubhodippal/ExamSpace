@@ -8,9 +8,6 @@ public class Exams {
     private String creatorUid;
     private Integer marks;
     private LocalDateTime createdAt;
-    private LocalDateTime startAt;
-    private LocalDateTime endAt;
-    private Integer timeLimit;
     private String state;
     private String examName;
     private String examPasscode;
@@ -69,30 +66,6 @@ public class Exams {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getStartAt() {
-        return startAt;
-    }
-
-    public void setStartAt(LocalDateTime startAt) {
-        this.startAt = startAt;
-    }
-
-    public LocalDateTime getEndAt() {
-        return endAt;
-    }
-
-    public void setEndAt(LocalDateTime endAt) {
-        this.endAt = endAt;
-    }
-
-    public Integer getTimeLimit() {
-        return timeLimit;
-    }
-
-    public void setTimeLimit(Integer timeLimit) {
-        this.timeLimit = timeLimit;
     }
 
     public String getState() {

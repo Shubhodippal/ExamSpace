@@ -33,7 +33,6 @@ public class ExamLoginDaoImpl implements ExamLoginDao {
         examLogin.setUsername(rs.getString("username"));
         examLogin.setRoll(rs.getString("roll"));
         examLogin.setExamUid(rs.getString("exam_uid"));
-        examLogin.setTimeLeft(rs.getObject("time_left", Integer.class));
         examLogin.setSubmitted(rs.getString("submitted"));
         
         Timestamp lastLogin = rs.getTimestamp("last_login");
@@ -50,8 +49,8 @@ public class ExamLoginDaoImpl implements ExamLoginDao {
         
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(
-                "INSERT INTO exam_login (uid, name, email, username, roll, exam_uid, time_left, submitted, last_login) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO exam_login (uid, name, email, username, roll, exam_uid, submitted, last_login) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 Statement.RETURN_GENERATED_KEYS
             );
             
@@ -72,20 +71,13 @@ public class ExamLoginDaoImpl implements ExamLoginDao {
             }
             
             ps.setString(6, examLogin.getExamUid());
-            
-            if (examLogin.getTimeLeft() != null) {
-                ps.setInt(7, examLogin.getTimeLeft());
-            } else {
-                ps.setNull(7, java.sql.Types.INTEGER);
-            }
-            
-            ps.setString(8, examLogin.getSubmitted() != null ? examLogin.getSubmitted() : "NO");
+            ps.setString(7, examLogin.getSubmitted() != null ? examLogin.getSubmitted() : "NO");
             
             LocalDateTime lastLogin = examLogin.getLastLogin();
             if (lastLogin != null) {
-                ps.setTimestamp(9, Timestamp.valueOf(lastLogin));
+                ps.setTimestamp(8, Timestamp.valueOf(lastLogin));
             } else {
-                ps.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+                ps.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
             }
             
             return ps;
@@ -117,22 +109,6 @@ public class ExamLoginDaoImpl implements ExamLoginDao {
             return jdbcTemplate.query(sql, examLoginRowMapper, examUid);
         } catch (DataAccessException e) {
             throw new RuntimeException("Failed to retrieve exam logins by exam: " + e.getMessage(), e);
-        }
-    }
-    
-    @Override
-    public boolean updateTimeLeft(String examUid, String uid, Integer timeLeft) {
-        try {
-            String sql = "UPDATE exam_login SET time_left = ?, last_login = ? WHERE exam_uid = ? AND uid = ?";
-            int rowsAffected = jdbcTemplate.update(sql, 
-                timeLeft, 
-                Timestamp.valueOf(LocalDateTime.now()),
-                examUid,
-                uid
-            );
-            return rowsAffected > 0;
-        } catch (DataAccessException e) {
-            throw new RuntimeException("Failed to update time left: " + e.getMessage(), e);
         }
     }
     

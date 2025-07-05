@@ -32,21 +32,11 @@ public class ExamDaoImpl implements ExamDao {
             exam.setCreatedAt(createdAt.toLocalDateTime());
         }
         
-        Timestamp startAt = rs.getTimestamp("start_at");
-        if (startAt != null) {
-            exam.setStartAt(startAt.toLocalDateTime());
-        }
-        
-        Timestamp endAt = rs.getTimestamp("end_at");
-        if (endAt != null) {
-            exam.setEndAt(endAt.toLocalDateTime());
-        }
-        
-        exam.setTimeLimit(rs.getObject("time_limit", Integer.class));
+        // Remove start_at, end_at, time_limit fields
         exam.setState(rs.getString("state"));
         exam.setExamName(rs.getString("exam_name"));
         exam.setExamPasscode(rs.getString("exam_passcode"));
-        exam.setSharing(rs.getString("sharing")); // Add this line
+        exam.setSharing(rs.getString("sharing"));
         
         return exam;
     };
@@ -61,8 +51,8 @@ public class ExamDaoImpl implements ExamDao {
         
         jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(
-                "INSERT INTO exam (exam_id, creator_uid, marks, start_at, end_at, time_limit, state, exam_name, exam_passcode, sharing) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "INSERT INTO exam (exam_id, creator_uid, marks, state, exam_name, exam_passcode, sharing) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)",
                 Statement.RETURN_GENERATED_KEYS
             );
             
@@ -75,28 +65,10 @@ public class ExamDaoImpl implements ExamDao {
                 ps.setNull(3, java.sql.Types.INTEGER);
             }
             
-            if (exam.getStartAt() != null) {
-                ps.setTimestamp(4, Timestamp.valueOf(exam.getStartAt()));
-            } else {
-                ps.setNull(4, java.sql.Types.TIMESTAMP);
-            }
-            
-            if (exam.getEndAt() != null) {
-                ps.setTimestamp(5, Timestamp.valueOf(exam.getEndAt()));
-            } else {
-                ps.setNull(5, java.sql.Types.TIMESTAMP);
-            }
-            
-            if (exam.getTimeLimit() != null) {
-                ps.setInt(6, exam.getTimeLimit());
-            } else {
-                ps.setNull(6, java.sql.Types.INTEGER);
-            }
-            
-            ps.setString(7, exam.getState() != null ? exam.getState() : "OFF");
-            ps.setString(8, exam.getExamName());
-            ps.setString(9, exam.getExamPasscode());
-            ps.setString(10, exam.getSharing()); // Add this line
+            ps.setString(4, exam.getState() != null ? exam.getState() : "OFF");
+            ps.setString(5, exam.getExamName());
+            ps.setString(6, exam.getExamPasscode());
+            ps.setString(7, exam.getSharing());
             
             return ps;
         }, keyHolder);
@@ -122,18 +94,14 @@ public class ExamDaoImpl implements ExamDao {
     
     @Override
     public boolean updateExam(Exams exam) {
-        String sql = "UPDATE exam SET marks = ?, start_at = ?, end_at = ?, time_limit = ?, " +
-                     "state = ?, exam_name = ?, exam_passcode = ?, sharing = ? WHERE exam_id = ?";
+        String sql = "UPDATE exam SET marks = ?, state = ?, exam_name = ?, exam_passcode = ?, sharing = ? WHERE exam_id = ?";
         
         int rowsAffected = jdbcTemplate.update(sql,
             exam.getMarks(),
-            exam.getStartAt() != null ? Timestamp.valueOf(exam.getStartAt()) : null,
-            exam.getEndAt() != null ? Timestamp.valueOf(exam.getEndAt()) : null,
-            exam.getTimeLimit(),
             exam.getState(),
             exam.getExamName(),
             exam.getExamPasscode(),
-            exam.getSharing(), // Add this line
+            exam.getSharing(),
             exam.getExamId()
         );
         

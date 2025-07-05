@@ -28,15 +28,6 @@ public interface ExamLoginDao {
     List<ExamLogin> getExamLoginsByExam(String examUid);
     
     /**
-     * Update time left for an exam login
-     * @param examUid The exam UID
-     * @param uid The user UID
-     * @param timeLeft The time left in seconds
-     * @return true if successful, false otherwise
-     */
-    boolean updateTimeLeft(String examUid, String uid, Integer timeLeft);
-    
-    /**
      * Mark an exam as submitted
      * @param examUid The exam UID
      * @param uid The user UID

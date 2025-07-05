@@ -10,7 +10,6 @@ public class ExamLogin {
     private String username;
     private String roll;
     private String examUid;
-    private Integer timeLeft;
     private String submitted; // "YES" or "NO"
     private LocalDateTime lastLogin;
     
@@ -84,14 +83,6 @@ public class ExamLogin {
     
     public void setExamUid(String examUid) {
         this.examUid = examUid;
-    }
-    
-    public Integer getTimeLeft() {
-        return timeLeft;
-    }
-    
-    public void setTimeLeft(Integer timeLeft) {
-        this.timeLeft = timeLeft;
     }
     
     public String getSubmitted() {
