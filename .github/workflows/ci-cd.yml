@@ -50,6 +50,12 @@ jobs:
         run: |
           docker save examspace-backend:latest -o examspace-backend.tar
 
+      - name: List files in workspace
+        run: ls -l
+
+      - name: Fix permissions for tar file
+        run: chmod 644 examspace-backend.tar
+
       - name: Copy Docker image to Pi
         uses: appleboy/scp-action@v0.1.7
         with:
