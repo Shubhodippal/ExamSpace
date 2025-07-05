@@ -8,73 +8,58 @@
 
 ## Project Status: In Progress
 
-Welcome to **ExamSpace**! This is an online examination platform aimed at simplifying life for both teachers and students. Teachers can simply create, manage, and distribute exams with ease, and students have a hassle-free and stress-free exam experience. We're currently in the process of building and enhancing ExamSpace, so watch this space for more features!
+Welcome to **ExamSpace**! It is a web-based exam platform committed to simplifying the life of teachers and students. Teachers can effortlessly create, administer, and distribute exams, while students have a hassle-free and easy exam experience. We are currently at the development and growth stage of ExamSpace, so watch this space for more!
 
 ## Features
 
 ### What You Can Do Right Now
 
 - **User Accounts & Security**
-- Securely sign up and log in with JWT authentication
-  - Receive OTPs for signup and password recovery
-  - Confirm your email address
-  - Edit your profile (name, phone)
-  - Safely reset your password
+- Register securely and log in through JWT authentication
+- Receive OTPs for registration and password recovery
+- Confirm your email address
+- Update your profile (name, phone)
+- Revoke your password securely
 
-- **Exam Management**
-  - Create, edit, and delete exams
-  - Manually generate or generate using AI (Cohere API) questions
-  - Upload files (PDF, DOCX, images) and extract content
-- Extract text from images using OCR (Tesseract)
-- CRUD questions easily
-- Share exams with many users
+- **Test Administration**
+- Create, edit, and delete exams
+- Hand-write or write using AI (Cohere API) questions
+- Upload files (images, PDF, DOCX) and extract data
+- Extract text from pictures using OCR with Tesseract
+- Release tests to many users
 
-- **Administering Exams**
-  - Sign up for exams and begin when you're ready
-  - Display a real-time timer and automatically submit when time's up
-  - Monitor your progress and submission status
+- **Administering Tests**
+- Register for exams and start when you're ready
+- Monitor your progress and submission status
 
 - **Document Processing**
-  - Extract text from images and scanned documents using OCR
+- Convert text from images and scanned documents using OCR
 - Multi-file format support
-  - Utilize extracted content to create questions
-
-- **Contact & Support**
-  - Contact through a contact form (emails directly reach admins)
-  - Interact with the admin team directly
-
-### Coming Soon
-- Advanced reporting and analytics
-- Question bank management
-- Bulk operations for simplification
-- Proctoring functionalities for safe exams
-- Mobile application for accessing on-the-go
+- Use the extracted information to create questions
 
 ## Technology Stack
 
 ### Backend
 - **Spring Boot 3.5.3** (Java 21)
-- **MariaDB** for storing data
+- **MariaDB** for data storage
 - **Spring Security** with JWT
 - **Spring Data JPA** for ORM
 - **JavaMail API** for email
-- **Cohere API** for AI question generation
+- **Cohere API** for question generation using AI
 - **Tesseract OCR** for extracting text from images
 - **Maven** for builds
 
-### Frontend
+### Frontend 
 - **React 19.1.0** with **Vite 7.0.0**
-- **JavaScript (ES6+)** as scripting language
+- **JavaScript (ES6+)** as a scripting language
 - **CSS3** for styling
-- **Fetch API** for HTTP requests
-- **React Router DOM** for routing
+- **Fetch API** for HTTP requests 
+- **React Router DOM** for routing 
 
-### DevOps & Tools
-- **Git** for version control
-- **VS Code** for development
-- **JUnit** (backend) & **React Testing Library** (frontend) for testing
-- **GitHub Actions** for CI/CD
+### DevOps & Tools 
+- **Git** for version control 
+- **VS Code** for coding 
+- **JUnit** (backend) & **React Testing Library** (frontend) for testing 
+- **GitHub Actions** for CI/CD 
 
----
-
-**Note:** ExamSpace is in development. Features and APIs are subject to change as we scale. Thank you for your interest and support!
+--- **Note: ExamSpace is in development. Features and APIs may change as we expand. Appreciate your interest and support!**
