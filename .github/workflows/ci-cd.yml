@@ -7,37 +7,34 @@ on:
     branches: [main]
 
 jobs:
-  git-pull:
-    runs-on: self-hosted
-    steps:
-      - name: Git pull latest code
-        run: |
-          cd /home/palsh/ExamSpace
-          git pull origin main
-
   build-and-test:
-    needs: git-pull
     runs-on: self-hosted
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Build with Maven
         run: mvn clean package -DskipTests --file Backend/demo/pom.xml
-        working-directory: /home/palsh/ExamSpace
 
   docker-and-deploy:
     needs: build-and-test
     runs-on: self-hosted
     if: github.ref == 'refs/heads/main'
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Stop and remove old container (compose)
         run: docker compose down || true
-        working-directory: /home/palsh/ExamSpace/Backend/demo
+        working-directory: Backend/demo
 
       - name: Free port 8081 if in use
         run: fuser -k 8081/tcp || true
+        working-directory: Backend/demo
 
       - name: Deploy with Docker Compose
         run: docker compose up -d --build
-        working-directory: /home/palsh/ExamSpace/Backend/demo
+        working-directory: Backend/demo
 
       - name: List running containers
         run: docker ps
