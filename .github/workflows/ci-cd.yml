@@ -48,7 +48,7 @@ jobs:
 
       - name: Save Docker image as tar
         run: |
-          docker save examspace-backend:latest -o ${{ github.workspace }}/examspace-backend.tar
+          docker save examspace-backend:latest -o examspace-backend.tar
 
       - name: Copy Docker image to Pi
         uses: appleboy/scp-action@v0.1.7
