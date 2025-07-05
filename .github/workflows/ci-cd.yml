@@ -56,7 +56,7 @@ jobs:
           host: ${{ secrets.PI_HOST }}
           username: ${{ secrets.PI_USER }}
           key: ${{ secrets.PI_SSH_KEY }}
-          source: "${{ github.workspace }}/examspace-backend.tar"
+          source: "examspace-backend.tar"
           target: "/home/${{ secrets.PI_USER }}/examspace-backend.tar"
 
       - name: Deploy on Pi via SSH
