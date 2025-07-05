@@ -61,6 +61,10 @@ jobs:
           cd Backend/demo
           docker compose down || true
 
+      - name: Remove old examspace container if exists
+        run: |
+          docker rm -f examspace || true
+
       - name: Start container with Compose Up
         run: |
           cd Backend/demo
