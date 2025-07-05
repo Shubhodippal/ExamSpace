@@ -7,13 +7,20 @@ on:
     branches: [main]
 
 jobs:
+  git-pull:
+    runs-on: self-hosted
+    steps:
+      - name: Git pull latest code
+        run: |
+          cd ${{ github.workspace }}
+          git pull origin main
+
   build-and-test:
+    needs: git-pull
     runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          path: /home/palsh/ExamSpace
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -23,7 +30,6 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package -DskipTests --file Backend/demo/pom.xml
-        working-directory: /home/palsh/ExamSpace
 
       - name: Archive JAR
         uses: actions/upload-artifact@v4
@@ -45,14 +51,20 @@ jobs:
           name: demo-jar
           path: Backend/demo/target
 
-      - name: Stop and remove old container (compose)
-        run: docker compose -f Backend/demo/docker-compose.yml down || true
+      - name: Build Docker image with Compose
+        run: |
+          cd Backend/demo
+          docker compose build
 
-      - name: Free port 8081 if in use
-        run: fuser -k 8081/tcp || true
+      - name: Stop and remove old container (Compose Down)
+        run: |
+          cd Backend/demo
+          docker compose down || true
 
-      - name: Deploy with Docker Compose
-        run: docker compose -f Backend/demo/docker-compose.yml up -d --build
+      - name: Start container with Compose Up
+        run: |
+          cd Backend/demo
+          docker compose up -d
 
       - name: List running containers
         run: docker ps
