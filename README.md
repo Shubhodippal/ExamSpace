@@ -6,73 +6,75 @@
 [![Vite](https://img.shields.io/badge/Vite-7.0.0-purple.svg)](https://vitejs.dev/)
 [![MariaDB](https://img.shields.io/badge/MariaDB-Latest-blue.svg)](https://mariadb.org/)
 
-## 🚧 Project Status: In Progress
+## Project Status: In Progress
 
-ExamSpace is a comprehensive online examination platform that allows educators to create, manage, and conduct exams while providing students with a seamless exam-taking experience. The project is currently under active development.
+Welcome to **ExamSpace**! This is an online examination platform aimed at simplifying life for both teachers and students. Teachers can simply create, manage, and distribute exams with ease, and students have a hassle-free and stress-free exam experience. We're currently in the process of building and enhancing ExamSpace, so watch this space for more features!
 
-## ✨ Features
+## Features
 
-### Current Features
-- **User Authentication & Authorization**
-  - JWT-based authentication
-  - OTP verification for signup and password reset
-  - Email verification system
-  - Profile management
+### What You Can Do Right Now
+
+- **User Accounts & Security**
+- Securely sign up and log in with JWT authentication
+  - Receive OTPs for signup and password recovery
+  - Confirm your email address
+  - Edit your profile (name, phone)
+  - Safely reset your password
 
 - **Exam Management**
-  - Create and manage exams
-  - Question generation using AI (Cohere API)
-  - Document upload and content extraction
-  - Manual question addition
-  - Question CRUD operations
+  - Create, edit, and delete exams
+  - Manually generate or generate using AI (Cohere API) questions
+  - Upload files (PDF, DOCX, images) and extract content
+- Extract text from images using OCR (Tesseract)
+- CRUD questions easily
+- Share exams with many users
 
-- **Exam Taking System**
-  - Exam registration and start functionality
-  - Real-time timer management
-  - Auto-submission on time expiry
-  - Progress tracking
+- **Administering Exams**
+  - Sign up for exams and begin when you're ready
+  - Display a real-time timer and automatically submit when time's up
+  - Monitor your progress and submission status
 
 - **Document Processing**
-  - OCR support with Tesseract integration
-  - Multiple file format support (PDF, DOCX, images)
-  - Content extraction for question generation
+  - Extract text from images and scanned documents using OCR
+- Multi-file format support
+  - Utilize extracted content to create questions
 
-- **Contact System**
-  - Contact form with email integration
-  - Admin communication
+- **Contact & Support**
+  - Contact through a contact form (emails directly reach admins)
+  - Interact with the admin team directly
 
-### Planned Features
-- Advanced analytics and reporting
+### Coming Soon
+- Advanced reporting and analytics
 - Question bank management
-- Bulk operations
-- Advanced proctoring features
-- Mobile application
+- Bulk operations for simplification
+- Proctoring functionalities for safe exams
+- Mobile application for accessing on-the-go
 
-## 🛠 Technology Stack
+## Technology Stack
 
 ### Backend
-- **Framework**: Spring Boot 3.5.3
-- **Language**: Java 21
-- **Database**: MariaDB
-- **Security**: Spring Security with JWT
-- **ORM**: Spring Data JPA
-- **Email**: JavaMail API
-- **AI Integration**: Cohere API
-- **OCR**: Tesseract OCR
-- **Build Tool**: Maven
+- **Spring Boot 3.5.3** (Java 21)
+- **MariaDB** for storing data
+- **Spring Security** with JWT
+- **Spring Data JPA** for ORM
+- **JavaMail API** for email
+- **Cohere API** for AI question generation
+- **Tesseract OCR** for extracting text from images
+- **Maven** for builds
 
 ### Frontend
-- **Framework**: React 19.1.0
-- **Build Tool**: Vite 7.0.0
-- **Language**: JavaScript (ES6+)
-- **Styling**: CSS3
-- **HTTP Client**: Fetch API
-- **Routing**: React Router DOM
+- **React 19.1.0** with **Vite 7.0.0**
+- **JavaScript (ES6+)** as scripting language
+- **CSS3** for styling
+- **Fetch API** for HTTP requests
+- **React Router DOM** for routing
 
 ### DevOps & Tools
-- **Version Control**: Git
-- **Development**: VS Code
-- **Testing**: JUnit (Backend), React Testing Library (Frontend)
+- **Git** for version control
+- **VS Code** for development
+- **JUnit** (backend) & **React Testing Library** (frontend) for testing
+- **GitHub Actions** for CI/CD
 
+---
 
-**Note**: This project is currently in development. Features and APIs may change as development progresses.
+**Note:** ExamSpace is in development. Features and APIs are subject to change as we scale. Thank you for your interest and support!
