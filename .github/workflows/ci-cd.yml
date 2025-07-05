@@ -12,9 +12,24 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          path: /home/palsh/ExamSpace
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
 
       - name: Build with Maven
         run: mvn clean package -DskipTests --file Backend/demo/pom.xml
+        working-directory: /home/palsh/ExamSpace
+
+      - name: Archive JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-jar
+          path: Backend/demo/target/demo-0.0.1-SNAPSHOT.jar
 
   docker-and-deploy:
     needs: build-and-test
@@ -24,17 +39,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Download JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: demo-jar
+          path: Backend/demo/target
+
       - name: Stop and remove old container (compose)
-        run: docker compose down || true
-        working-directory: Backend/demo
+        run: docker compose -f Backend/demo/docker-compose.yml down || true
 
       - name: Free port 8081 if in use
         run: fuser -k 8081/tcp || true
-        working-directory: Backend/demo
 
       - name: Deploy with Docker Compose
-        run: docker compose up -d --build
-        working-directory: Backend/demo
+        run: docker compose -f Backend/demo/docker-compose.yml up -d --build
 
       - name: List running containers
         run: docker ps
