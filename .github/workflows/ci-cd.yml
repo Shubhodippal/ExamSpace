@@ -7,7 +7,16 @@ on:
     branches: [main]
 
 jobs:
+  git-pull:
+    runs-on: self-hosted
+    steps:
+      - name: Git pull latest code
+        run: |
+          cd ${{ github.workspace }}
+          git pull origin main
+
   build-and-test:
+    needs: git-pull
     runs-on: self-hosted
     steps:
       - name: Checkout code
