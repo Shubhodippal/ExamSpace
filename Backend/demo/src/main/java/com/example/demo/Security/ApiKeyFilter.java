@@ -27,6 +27,12 @@ public class ApiKeyFilter extends OncePerRequestFilter {
             @org.springframework.lang.NonNull HttpServletResponse response,
             @org.springframework.lang.NonNull FilterChain filterChain) throws ServletException, IOException {
         
+        // Skip API key validation for preflight OPTIONS requests
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+        
         // Get API key from request header
         String requestApiKey = request.getHeader(apiKeyHeaderName);
         
