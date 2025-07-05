@@ -51,6 +51,10 @@ jobs:
           docker stop examspace || true
           docker rm examspace || true
 
+      - name: Free port 8081 if in use
+        run: |
+          fuser -k 8081/tcp || true
+
       - name: Run new container
         run: |
           docker run -d --name examspace -p 8081:8081 examspace-backend:latest
