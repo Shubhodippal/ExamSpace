@@ -86,7 +86,7 @@ function ExamSection() {
         return;
       }
       
-      const response = await fetch(`http://localhost:8080/exam/my-exams/${userId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/my-exams/${userId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ function ExamSection() {
         return;
       }
       
-      const response = await fetch(`http://localhost:8080/exam/shared-exams?email=${encodeURIComponent(userEmail)}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/shared-exams?email=${encodeURIComponent(userEmail)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -276,7 +276,7 @@ function ExamSection() {
     }
     
     try {
-      const response = await fetch(`http://localhost:8080/exam/${exam.examId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/${exam.examId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

@@ -34,7 +34,7 @@ function CreateExamForm({ onSubmit, onCancel, getUserId }) {
         return;
       }
       
-      const response = await fetch(`http://localhost:8080/exam/create`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

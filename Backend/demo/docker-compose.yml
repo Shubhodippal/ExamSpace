@@ -8,4 +8,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8081:8081"
+    environment:
+      - JAVA_OPTS=-Xms512m -Xmx1024m -XX:+UseG1GC -XX:MaxGCPauseMillis=100
+    deploy:
+      resources:
+        limits:
+          cpus: '2'       # allow up to 2 CPU cores
+          memory: 1500M     # allow up to 1.5 GB RAM
     restart: always

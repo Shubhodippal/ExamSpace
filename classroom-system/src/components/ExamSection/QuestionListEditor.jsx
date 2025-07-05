@@ -23,7 +23,7 @@ function QuestionListEditor({
     setIsLoadingQuestions(true);
     
     try {
-      const response = await fetch(`http://localhost:8080/exam/${examData.examId}/questions`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/${examData.examId}/questions`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ function QuestionListEditor({
 
   const handleSaveQuestion = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/exam/question/${editingQuestion.questionUid}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/question/${editingQuestion.questionUid}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -112,7 +112,7 @@ function QuestionListEditor({
       setExamQuestions(updatedQuestions);
       
       // Then perform the actual deletion in the background
-      const response = await fetch(`http://localhost:8080/exam/question/${questionUid}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/question/${questionUid}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -367,7 +367,7 @@ function QuestionListEditor({
           }
           
           try {
-            const response = await fetch(`http://localhost:8080/exam/add-question`, {
+            const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/add-question`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',

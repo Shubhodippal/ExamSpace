@@ -34,7 +34,7 @@ function EditExamForm({ exam, onCancel, onUpdate}) {
     e.preventDefault();
     
     try {
-      const response = await fetch(`http://localhost:8080/exam/${currentExam.examId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/${currentExam.examId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

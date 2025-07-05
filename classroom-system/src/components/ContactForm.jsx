@@ -29,7 +29,7 @@ function ContactForm() {
         message: `From ExamSpace\n\n${formData.message}`
       }
 
-      const response = await fetch('http://localhost:8080/users/send_mail', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/send_mail`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

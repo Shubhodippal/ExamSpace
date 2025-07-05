@@ -74,7 +74,7 @@ function QuestionGenerator({
     setUploadSuccess(false);
     
     try {
-      const response = await fetch('http://localhost:8080/exam/upload', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/upload`, {
         method: 'POST',
         headers: {
           'X-API-Key': 'Meowmeowmeow123456789'
@@ -113,7 +113,7 @@ function QuestionGenerator({
         return;
       }
       
-      const response = await fetch(`http://localhost:8080/exam/add-question`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/add-question`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ function QuestionGenerator({
       
       console.log('Sending AI question generation request:', requestData);
       
-      const response = await fetch('http://localhost:8080/exam/generate-questions', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/generate-questions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -239,7 +239,7 @@ function QuestionGenerator({
       
       const results = uploadedContent.results || {};
       
-      const response = await fetch(`http://localhost:8080/exam/generate-questions-from-content`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/exam/generate-questions-from-content`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

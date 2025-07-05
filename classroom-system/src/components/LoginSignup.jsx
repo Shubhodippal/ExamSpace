@@ -95,12 +95,12 @@ function LoginSignup() {
     setMessage({ type: '', text: '' })
 
     try {
-      const response = await fetch('https://examspace.shubhodip.in/users/login', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/login`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
           'X-API-Key': import.meta.env.VITE_API_KEY
-         },
+        },
         body: JSON.stringify(loginData)
       })
 
@@ -172,7 +172,7 @@ function LoginSignup() {
     setMessage({ type: '', text: '' })
 
     try {
-      const response = await fetch('http://localhost:8081/users/otp', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/otp`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -257,7 +257,7 @@ function LoginSignup() {
     setMessage({ type: '', text: '' })
 
     try {
-      const response = await fetch('http://localhost:8081/users/register', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/register`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -305,7 +305,7 @@ function LoginSignup() {
     setMessage({ type: '', text: '' })
 
     try {
-      const response = await fetch('http://localhost:8081/users/otp', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/otp`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -404,7 +404,7 @@ function LoginSignup() {
     setMessage({ type: '', text: '' })
 
     try {
-      const response = await fetch('http://localhost:8081/users/reset-password', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/reset-password`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

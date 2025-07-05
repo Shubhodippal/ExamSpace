@@ -74,7 +74,7 @@ function ProfileSection({ userData }) {
     setUpdateMessage({ type: '', text: '' });
 
     try {
-      const response = await fetch('http://localhost:8080/users/update-profile', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/update-profile`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -50,7 +50,7 @@ const TokenService = {
     }
     
     try {
-      const response = await fetch('http://localhost:8080/users/refresh-token', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/users/refresh-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
