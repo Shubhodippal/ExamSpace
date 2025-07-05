@@ -44,16 +44,16 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t examspace-backend:latest Backend/demo
+          docker build -t examspace:latest Backend/demo
 
       - name: Stop and remove old container
         run: |
-          docker stop examspace-backend || true
-          docker rm examspace-backend || true
+          docker stop examspace || true
+          docker rm examspace || true
 
       - name: Run new container
         run: |
-          docker run -d --name examspace-backend -p 8081:8081 examspace-backend:latest
+          docker run -d --name examspace -p 8081:8081 examspace-backend:latest
 
       - name: List files for debug
         run: ls -l ${{ github.workspace }}
