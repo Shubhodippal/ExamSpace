@@ -65,6 +65,10 @@ jobs:
         run: |
           docker rm -f examspace || true
 
+      - name: Free port 8081 if in use
+        run: |
+          fuser -k 8081/tcp || true
+
       - name: Start container with Compose Up
         run: |
           cd Backend/demo
