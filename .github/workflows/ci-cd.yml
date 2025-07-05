@@ -12,61 +12,32 @@ jobs:
     steps:
       - name: Git pull latest code
         run: |
-          cd ${{ github.workspace }}
+          cd /home/palsh/ExamSpace
           git pull origin main
 
   build-and-test:
     needs: git-pull
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-
       - name: Build with Maven
         run: mvn clean package -DskipTests --file Backend/demo/pom.xml
-
-      - name: Archive JAR
-        uses: actions/upload-artifact@v4
-        with:
-          name: demo-jar
-          path: Backend/demo/target/demo-0.0.1-SNAPSHOT.jar
+        working-directory: /home/palsh/ExamSpace
 
   docker-and-deploy:
     needs: build-and-test
     runs-on: self-hosted
     if: github.ref == 'refs/heads/main'
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download JAR
-        uses: actions/download-artifact@v4
-        with:
-          name: demo-jar
-          path: Backend/demo/target
-
-      - name: Build Docker image
-        run: |
-          docker build -t examspace:latest Backend/demo
-
-      - name: Stop and remove old container
-        run: |
-          docker stop examspace || true
-          docker rm examspace || true
+      - name: Stop and remove old container (compose)
+        run: docker compose down || true
+        working-directory: /home/palsh/ExamSpace/Backend/demo
 
       - name: Free port 8081 if in use
-        run: |
-          fuser -k 8081/tcp || true
+        run: fuser -k 8081/tcp || true
 
-      - name: Run new container
-        run: |
-          docker run -d --name examspace -p 8081:8081 examspace-backend:latest
+      - name: Deploy with Docker Compose
+        run: docker compose up -d --build
+        working-directory: /home/palsh/ExamSpace/Backend/demo
 
-      - name: List files for debug
-        run: ls -l ${{ github.workspace }}
+      - name: List running containers
+        run: docker ps
