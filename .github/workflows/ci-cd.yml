@@ -1,0 +1,72 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Build with Maven
+        run: mvn clean package --file Backend/demo/pom.xml
+
+      - name: Archive JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-jar
+          path: Backend/demo/target/demo-0.0.1-SNAPSHOT.jar
+
+  docker-and-deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: demo-jar
+          path: Backend/demo/target
+
+      - name: Build Docker image
+        run: |
+          docker build -t examspace-backend:latest Backend/demo
+
+      - name: Save Docker image as tar
+        run: |
+          docker save examspace-backend:latest -o examspace-backend.tar
+
+      - name: Copy Docker image to Pi
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.PI_HOST }}
+          username: ${{ secrets.PI_USER }}
+          key: ${{ secrets.PI_SSH_KEY }}
+          source: "examspace-backend.tar"
+          target: "/home/${{ secrets.PI_USER }}/examspace-backend.tar"
+
+      - name: Deploy on Pi via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PI_HOST }}
+          username: ${{ secrets.PI_USER }}
+          key: ${{ secrets.PI_SSH_KEY }}
+          script: |
+            docker load -i ~/examspace-backend.tar
+            docker stop examspace-backend || true
+            docker rm examspace-backend || true
+            docker run -d --name examspace-backend -p 8081:8081 examspace-backend:latest
