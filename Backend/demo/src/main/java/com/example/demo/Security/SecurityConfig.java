@@ -13,48 +13,51 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class SecurityConfig {
-    
+
     private final ApiKeyFilter apiKeyFilter;
-    
+
     public SecurityConfig(ApiKeyFilter apiKeyFilter) {
         this.apiKeyFilter = apiKeyFilter;
     }
-    
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-          .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-          .csrf(csrf -> csrf.disable())
-          .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-          // Add the API key filter before the UsernamePasswordAuthenticationFilter
-          .addFilterBefore(apiKeyFilter, UsernamePasswordAuthenticationFilter.class);
-        
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+            .addFilterBefore(apiKeyFilter, UsernamePasswordAuthenticationFilter.class);
+
         return http.build();
     }
-    
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
-        
-        // Add more allowed headers - include common ones that might be used
+
+        configuration.setAllowedOrigins(Arrays.asList("*")); // Allow all origins
+        configuration.setAllowedMethods(Arrays.asList(
+            "GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"
+        ));
+
         configuration.setAllowedHeaders(Arrays.asList(
-            "authorization", 
-            "content-type", 
-            "x-auth-token", 
+            "authorization",
+            "content-type",
+            "x-auth-token",
             "X-API-Key",
             "accept",
             "origin",
             "access-control-request-method",
             "access-control-request-headers"
         ));
-        
+
         configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
-        configuration.setAllowCredentials(false); // Must be false when allowedOrigins contains "*"
-        
+        configuration.setAllowCredentials(false); // Must be false when using wildcard "*"
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 }
+
